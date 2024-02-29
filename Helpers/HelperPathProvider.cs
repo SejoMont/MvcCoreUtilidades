@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 
 namespace MvcCoreUtilidades.Helpers
 {
-    // Enumeración que representa las carpetas utilizadas por los controllers
+    // Enumeración que define carpetas utilizadas por el sistema
     public enum Folders { Images = 0, Facturas = 1, Uploads = 2, Temporal = 3, Mails = 4 }
 
     // Clase que proporciona métodos para mapear rutas y URLs de archivos
@@ -19,17 +19,27 @@ namespace MvcCoreUtilidades.Helpers
             this.hostEnvironment = hostEnvironment;
         }
 
-        //Metodo que nos devuelve el nombre de la carpeta del folder
-        private string GetFolderPath()
+        // Método privado que devuelve el nombre de la carpeta según el Folder especificado
+        private string GetFolderPath(Folders folder)
         {
-
+            string carpeta = "";
+            if (folder == Folders.Images)
+                carpeta = "images";
+            else if (folder == Folders.Temporal)
+                carpeta = "temp";
+            else if (folder == Folders.Facturas)
+                carpeta = "facturas";
+            else if (folder == Folders.Uploads)
+                carpeta = "uploads";
+            else if (folder == Folders.Mails)
+                carpeta = "mails";
+            return carpeta;
         }
-
 
         // Método para mapear la ruta completa del archivo en el sistema de archivos del servidor
         public string MapPath(string fileName, Folders folder)
         {
-            string carpeta = GetFolderName(folder);
+            string carpeta = this.GetFolderPath(folder);
             string rootPath = this.hostEnvironment.WebRootPath;
             string path = Path.Combine(rootPath, carpeta, fileName);
             return path;
@@ -38,24 +48,11 @@ namespace MvcCoreUtilidades.Helpers
         // Método para mapear la URL completa del archivo
         public string MapUrlPath(string fileName, Folders folder)
         {
-            string carpeta = GetFolderName(folder);
+            string carpeta = this.GetFolderPath(folder);
             var addresses = server.Features.Get<IServerAddressesFeature>().Addresses;
             string serverUrl = addresses.FirstOrDefault();
-            string urlPath = $"{serverUrl}/{carpeta}/{fileName}";
+            string urlPath = serverUrl + "/" + carpeta + "/" + fileName;
             return urlPath;
-        }
-
-        // Método privado para obtener el nombre de la carpeta según la enumeración Folders
-        private string GetFolderName(Folders folder)
-        {
-            return folder switch
-            {
-                Folders.Images => "images",
-                Folders.Temporal => "temp",
-                Folders.Facturas => "facturas",
-                Folders.Uploads => "uploads",
-                _ => throw new ArgumentOutOfRangeException(nameof(folder)),
-            };
         }
     }
 }
