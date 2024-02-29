@@ -4,6 +4,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Configuration.GetValue<string>("Key1:Key2");
+
 builder.Services.AddSingleton<HelperPathProvider>();
 
 var app = builder.Build();

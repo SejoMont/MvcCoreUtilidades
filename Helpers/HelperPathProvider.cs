@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 namespace MvcCoreUtilidades.Helpers
 {
     // Enumeración que representa las carpetas utilizadas por los controllers
-    public enum Folders { Images = 0, Facturas = 1, Uploads = 2, Temporal = 3 }
+    public enum Folders { Images = 0, Facturas = 1, Uploads = 2, Temporal = 3, Mails = 4 }
 
     // Clase que proporciona métodos para mapear rutas y URLs de archivos
     public class HelperPathProvider
@@ -18,6 +18,13 @@ namespace MvcCoreUtilidades.Helpers
             this.server = server;
             this.hostEnvironment = hostEnvironment;
         }
+
+        //Metodo que nos devuelve el nombre de la carpeta del folder
+        private string GetFolderPath()
+        {
+
+        }
+
 
         // Método para mapear la ruta completa del archivo en el sistema de archivos del servidor
         public string MapPath(string fileName, Folders folder)
