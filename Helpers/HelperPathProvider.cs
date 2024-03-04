@@ -54,5 +54,6 @@ namespace MvcCoreUtilidades.Helpers
             string urlPath = serverUrl + "/" + carpeta + "/" + fileName;
             return urlPath;
         }
+
     }
 }

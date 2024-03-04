@@ -8,6 +8,8 @@ builder.Services.AddControllersWithViews();
 builder.Configuration.GetValue<string>("Key1:Key2");
 
 builder.Services.AddSingleton<HelperPathProvider>();
+builder.Services.AddSingleton<HelperMails>();
+builder.Services.AddSingleton<HelperUploadFiles>();
 
 var app = builder.Build();
 
